@@ -120,8 +120,8 @@ def remove_background_edge(image, drawable, edge_amount, threshold, grow_shrink,
 		# End the undo group
 		pdb.gimp_image_undo_group_end(image)
 
-def batch_remove_background(input_dir, output_dir, method, tolerance, feather, 
-                            edge_amount, threshold, grow_shrink):
+def batch_remove_background(input_dir, output_dir, method, x_coord, y_coord, 
+                            tolerance, feather, edge_amount, threshold, grow_shrink):
 	"""
 	Batch process multiple images for background removal.
 	
@@ -129,6 +129,8 @@ def batch_remove_background(input_dir, output_dir, method, tolerance, feather,
 		input_dir: Directory containing input images
 		output_dir: Directory to save processed images
 		method: 0 for fuzzy select, 1 for edge detection
+		x_coord: X coordinate for fuzzy select (percentage)
+		y_coord: Y coordinate for fuzzy select (percentage)
 		tolerance: Tolerance for fuzzy select method
 		feather: Feathering amount for fuzzy select
 		edge_amount: Edge detection sensitivity
@@ -154,7 +156,7 @@ def batch_remove_background(input_dir, output_dir, method, tolerance, feather,
 			
 			# Apply background removal based on method
 			if method == 0:  # Fuzzy select method
-				remove_background_fuzzy(image, drawable, 5, 5, tolerance, feather, False)
+				remove_background_fuzzy(image, drawable, x_coord, y_coord, tolerance, feather, False)
 			else:  # Edge detection method
 				remove_background_edge(image, drawable, edge_amount, threshold, 
 				                      grow_shrink, False)
@@ -164,7 +166,7 @@ def batch_remove_background(input_dir, output_dir, method, tolerance, feather,
 			output_filename = base_name + '_no_bg.png'
 			output_path = os.path.join(output_dir, output_filename)
 			
-			# Flatten and export
+			# Export the layer with transparency preserved
 			pdb.gimp_file_save(image, drawable, output_path, output_path)
 			
 			# Delete the image from memory
@@ -229,6 +231,8 @@ register(
 		(PF_DIRNAME, "input_dir", "Input Directory", ""),
 		(PF_DIRNAME, "output_dir", "Output Directory", ""),
 		(PF_OPTION, "method", "Removal Method", 0, ["Fuzzy Select", "Edge Detection"]),
+		(PF_SLIDER, "x_coord", "Fuzzy X Position (%)", 5, (0, 100, 1)),
+		(PF_SLIDER, "y_coord", "Fuzzy Y Position (%)", 5, (0, 100, 1)),
 		(PF_SLIDER, "tolerance", "Fuzzy Select Tolerance", 15, (0, 255, 1)),
 		(PF_SLIDER, "feather", "Fuzzy Select Feathering", 2, (0, 50, 1)),
 		(PF_SPINNER, "edge_amount", "Edge Sensitivity", 2.0, (1.0, 10.0, 0.1)),

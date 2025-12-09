@@ -180,7 +180,7 @@ def batch_remove_background(input_dir, output_dir, method, x_coord, y_coord,
 register(
 	"python_fu_remove_background_fuzzy",
 	"Remove background using fuzzy select method",
-	"Automatically removes background from an image using fuzzy selection. Click on the background color to select and remove it.",
+	"Automatically removes background from an image using fuzzy selection. Samples background color at specified X/Y position and removes similar colors.",
 	"Python-Fu GIMP Automation",
 	"Python-Fu GIMP Automation",
 	"2024",

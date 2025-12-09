@@ -80,25 +80,26 @@ def apply_watermark_single(image, watermark_path, position, scale, opacity, x_of
         x = img_width - wm_width - x_offset
         y = img_height - wm_height - y_offset
     elif position == POSITION_CENTER:
-        x = (img_width - wm_width) / 2 + x_offset
-        y = (img_height - wm_height) / 2 + y_offset
+        x = int((img_width - wm_width) / 2) + x_offset
+        y = int((img_height - wm_height) / 2) + y_offset
     elif position == POSITION_TILED:
         # For tiled mode, we'll create multiple copies
-        pdb.gimp_image_remove_layer(image, watermark_copy)
-        
-        # Calculate number of tiles needed
-        tiles_x = int((img_width / wm_width) + 1)
-        tiles_y = int((img_height / wm_height) + 1)
+        # Calculate number of tiles needed using math.ceil for exact coverage
+        import math
+        tiles_x = int(math.ceil(float(img_width) / wm_width))
+        tiles_y = int(math.ceil(float(img_height) / wm_height))
         
         for ty in range(tiles_y):
             for tx in range(tiles_x):
-                tile_copy = pdb.gimp_layer_new_from_drawable(watermark_layer, image)
+                tile_copy = pdb.gimp_layer_new_from_drawable(watermark_copy, image)
                 pdb.gimp_image_insert_layer(image, tile_copy, None, 0)
                 pdb.gimp_layer_set_opacity(tile_copy, opacity)
                 tile_x = tx * wm_width + x_offset
                 tile_y = ty * wm_height + y_offset
                 pdb.gimp_layer_set_offsets(tile_copy, tile_x, tile_y)
         
+        # Clean up the original watermark copy and watermark image
+        pdb.gimp_image_remove_layer(image, watermark_copy)
         pdb.gimp_image_delete(watermark_img)
         return image
     

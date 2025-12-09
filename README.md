@@ -20,32 +20,31 @@ Restart GIMP. Tools appear under `Filters → Game Dev`
 ## Tools
 
 ### tileset_slicer.py
-Slice tileset grids into individual sprite files.
+Slice spritesheet, save into separate files.
 - **Menu:** Filters → Game Dev → Slice Tileset
 - **Config:** tile width/height, margin, spacing
 - **Output:** `tile_0000.png`, `tile_0001.png`, ...
 
 ### normal_map_generator.py
-Generate normal maps from 2D sprites for game engines.
+Generate normal maps from sprites.
 - **Menu:** Filters → Game Dev → Generate Normal Map (single) or Batch Normal Maps
 - **Config:** strength multiplier, Y-axis inversion
 - **Output:** `[name]_normal.png`
-- **Supports:** Unity, Godot, Unreal Engine
 
 ### palette_quantizer.py
-Enforce color palette consistency across sprites.
+Limit sprites to specific color palette.
 - **Menu:** Filters → Game Dev → Quantize to Palette (single) or Batch Quantize Palette
 - **Config:** palette name (must exist in GIMP), dithering method
 - **Output:** `[name]_quantized.png`
 - **Note:** Create or import palettes via Windows → Dockable Dialogs → Palettes
 
 ### crop-threshold-blur-export.py
-Crop, threshold, and blur layers to generate shadow sprites.
+Generate shadow sprites from layers.
 - **Usage:** Run as Python script in GIMP console
 - **Output:** `shadow_sprites/[name]_shadow.png`
 
 ### export_shadow_sprites.py
-Batch export layers with optional color inversion.
+Batch export layers, optionally invert colors.
 - **Usage:** Run `InvertAll()` or `ExportAll()` in GIMP console
 - **Output:** `shadow_sprites/[layer_name]`
 

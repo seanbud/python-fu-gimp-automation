@@ -1,0 +1,29 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Backup files
+*.bak
+*.old
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sample output (keep folder structure, ignore generated content)
+samples/output/*.png
+samples/output/*.jpg
+samples/output/*.jpeg
+samples/output/*.bmp
+samples/output/*.gif
+samples/output/*.tif
+samples/output/*.tiff
